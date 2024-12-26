@@ -1,16 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>팀원 추가 페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .nav-item .nav-link {
+            color: black;
+        }
+
+        .postingbox {
+            margin: 40px auto 30px auto;
+            width: 1000px;
+        }
+
+        .form-floating {
+            margin-top: 24px;
+        }
+
+        #addBtn {
+            background-color: aquamarine;
+            border: none;
+        }
+    </style>
+    <script type="module">
+
+        // Firebase SDK 라이브러리
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+
+        // Firebase 구성 정보
+        const firebaseConfig = {
+            apiKey: "AIzaSyDwdevGNOHBHjZGo6STdq_0ZU5JhG9ccP0",
+            authDomain: "introduction-c71ef.firebaseapp.com",
+            projectId: "introduction-c71ef",
+            storageBucket: "introduction-c71ef.firebasestorage.app",
+            messagingSenderId: "305175752966",
+            appId: "1:305175752966:web:5e3f9298fe6b143d1e2e87"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        $("#addBtn").click(async function () {
+
+            // FireStorage에 저장할 이미지
+            let file = document.querySelector('#image').files[0];
+            let storageRef = ref(storage, 'image/' + file.name);
+
+            try {
+                // 1. 이미지 저장
+                await uploadBytes(storageRef, file);
+
+                // Firestore에 저장할 내용
+                let imageUrl = await getDownloadURL(storageRef);
+                let name = $('#name').val();
+                let introduction = $('#introduction').val();
+                let comment = $('#comment').val();
+                let region = $('#region').val();
+
+                let doc = {
+                    'image': imageUrl,
+                    'name': name,
+                    'introduction': introduction,
+                    'comment': comment,
+                    'region' : region
+                };
+
+                // 2. 데이터베이스 저장
+                await addDoc(collection(db, "members"), doc);
+
+                alert("회원 추가가 완료되었습니다!");
+                location.href = 'main.html';
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        })
+
+    </script>
+
 </head>
+
 <body>
-    팀원 추가 페이지 입니다
-    팀원 추가 페이지 수정 첫 번째
-    팀원 추가 페이지 수정 두 번째
-    팀원 추가 페이지 수정 세 번째
-    네 번째
-    수정 다섯 번째
+    <header>
+        <div class="container">
+            <header class="d-flex justify-content-center py-3">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
+                            style="background-color: aquamarine;">Main</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">introduce</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">guest book</a></li>
+                </ul>
+            </header>
+        </div>
+    </header>
+
+    <div class="postingbox">
+        <div>
+            <label for="formFileLg" class="form-label">프로필 사진을 등록해주세요🥳</label>
+            <input class="form-control form-control-lg" id="image" type="file">
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="name"></textarea>
+            <label for="floatingTextarea">이름</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="introduction"></textarea>
+            <label for="floatingTextarea">소개</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="region"></textarea>
+            <label for="floatingTextarea">지역</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment"></textarea>
+            <label for="floatingTextarea">팀원들에게 한마디</label>
+        </div>
+    </div>
+
+    <div class="button">
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-info btn-lg rounded-pill" id="addBtn">등록</button>
+        </div>
+    </div>
+
 </body>
+
 </html>
