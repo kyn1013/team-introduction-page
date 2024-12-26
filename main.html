@@ -11,7 +11,6 @@
 
     <style>
         .main {
-            /* background-color: aqua; */
             height: 430px;
 
             background-image: url('./image/배경2.png');
@@ -20,13 +19,13 @@
         }
 
         .introduce {
-            /* background-color: pink; */
             padding-top: 120px;
             padding-bottom: 20px;
         }
 
         .nav-item .nav-link {
             color: black;
+            border-radius: 20px;
         }
 
         .profile {
@@ -35,10 +34,47 @@
         }
 
         .card {
-            background-color: pink;
             width: 550px;
             margin: 20px auto 20px auto;
+            border-radius: 40px;
         }
+
+        .card-img-top {
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+        }
+
+
+        .btn-4 {
+            background-image: linear-gradient(to right, #CEF6F5 0%, #c2e9fb 51%, #a1c4fd 100%);
+        }
+
+        .btn {
+            flex: 1 1 auto;
+            margin: 20px auto 20px auto;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+        }
+
+        .btn:hover {
+            background-position: right center;
+        }
+
+        .btn-4 {
+            font-size: 25px;
+            width: 200px;
+        }
+
+        #addMemberBtn {
+            padding: 20px 15px;
+        }
+
     </style>
     <script type="module">
         // Firebase SDK 라이브러리
@@ -80,13 +116,13 @@
                     <img src="${image}"
                         class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h2 class="name">${name}</h2>
+                        <h2 class="name">${name}🐥</h2>
                         <p class="introduction">${comment}</p>
                     </div>
                 </div>
             </div>
             `
-            
+
             $(".row-cols-1").append(tempHtml);
         });
 
@@ -99,10 +135,11 @@
         <div class="container">
             <header class="d-flex justify-content-center py-3">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
-                            style="background-color: aquamarine;">Main</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">introduce</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">guest book</a></li>
+                    <li class="nav-item"><a href="main.html" class="nav-link active" aria-current="page"
+                            style="background-color: #CEF6F5;">Main</a></li>
+                    <li class="nav-item"><a href="create_member.html" class="nav-link">create</a></li>
+                    <li class="nav-item"><a href="introduction.html" class="nav-link">introduce</a></li>
+                    <li class="nav-item"><a href="guestbook.html" class="nav-link">guest book</a></li>
                 </ul>
             </header>
         </div>
@@ -122,9 +159,9 @@
         </div>
     </div>
 
-    <div class="button">
-        <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-info" id="addMemberBtn" type="button">멤버추가</button>
+    <div class="container">
+        <div class="d-grid gap-3 col-3 mx-auto text-center">
+            <a class="btn btn-4 rounded-pill fw-bold" id="addMemberBtn">팀원추가</a>
         </div>
     </div>
 </body>

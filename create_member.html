@@ -12,10 +12,11 @@
     <style>
         .nav-item .nav-link {
             color: black;
+            border-radius: 20px;
         }
 
         .postingbox {
-            margin: 40px auto 30px auto;
+            margin: 10px auto 30px auto;
             width: 1000px;
         }
 
@@ -27,6 +28,45 @@
             background-color: aquamarine;
             border: none;
         }
+
+        .nav-item .nav-link {
+            color: black;
+        }
+
+        .btn-4 {
+            background-image: linear-gradient(to right, #CEF6F5 0%, #c2e9fb 51%, #a1c4fd 100%);
+        }
+
+        .btn {
+            flex: 1 1 auto;
+            margin: 20px auto 20px auto;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+        }
+
+        .btn:hover {
+            background-position: right center;
+        }
+
+        .btn-4 {
+            font-size: 25px;
+            width: 200px;
+        }
+
+        .form-control {
+            border-radius: 20px;
+        }
+
+        #addBtn {
+            padding: 10px 15px;
+        }
+
     </style>
     <script type="module">
 
@@ -96,10 +136,10 @@
         <div class="container">
             <header class="d-flex justify-content-center py-3">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
-                            style="background-color: aquamarine;">Main</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">introduce</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">guest book</a></li>
+                    <li class="nav-item"><a href="main.html" class="nav-link" aria-current="page">Main</a></li>
+                    <li class="nav-item"><a href="create_member.html" class="nav-link active" style="background-color: #CEF6F5;">create</a></li>
+                    <li class="nav-item"><a href="introduction.html" class="nav-link">introduce</a></li>
+                    <li class="nav-item"><a href="guestbook.html" class="nav-link">guest book</a></li>
                 </ul>
             </header>
         </div>
@@ -116,7 +156,7 @@
         </div>
         <div class="form-floating">
             <textarea class="form-control" placeholder="Leave a comment here" id="introduction"></textarea>
-            <label for="floatingTextarea">소개</label>
+            <label for="floatingTextarea">한줄소개</label>
         </div>
         <div class="form-floating">
             <textarea class="form-control" placeholder="Leave a comment here" id="region"></textarea>
@@ -128,9 +168,15 @@
         </div>
     </div>
 
-    <div class="button">
+    <!-- <div class="button">
         <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-info btn-lg rounded-pill" id="addBtn">등록</button>
+        </div>
+    </div> -->
+
+    <div class="button">
+        <div class="d-grid gap-3 col-3 mx-auto text-center">
+            <a class="btn btn-4 rounded-pill fw-bold text-center" id="addBtn">등록</a>
         </div>
     </div>
 
