@@ -30,7 +30,7 @@
             overflow: hidden;
         }
 
-      
+
 
         /* 중단 작성칸 */
         .writingBox {
@@ -40,8 +40,11 @@
             padding: 10px;
         }
 
+        .form-control {
+            border-radius: 20px;
+        }
 
-        .writingBoxButton {
+        /* .writingBoxButton {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -49,9 +52,9 @@
             margin-top: 10px;
             margin-bottom: -10px;
 
-        }
+        } */
 
-        .remove-button {
+        /* .remove-button {
             background-color: #ffffff;
             color: #007adf;
             border: none;
@@ -62,27 +65,55 @@
             border: 1px solid #007adf;
             border-radius: 4px;
             text-align: center;
+            border-radius: 20px;
         }
 
         .remove-button:hover {
             background-color: #007adf;
             color: #fff;
+        } */
+
+        .btn {
+            flex: 1 1 auto;
+            margin: 20px auto 20px auto;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: rgb(255, 255, 255);
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
         }
 
-        .write-button {
+        .btn:hover {
+            background-position: right center;
+        }
+
+        .btn-4 {
+            background-image: linear-gradient(to right, #CEF6F5 0%, #c2e9fb 51%, #a1c4fd 100%);
+        }
+
+        .btn-4 {
+            font-size: 25px;
+            width: 200px;
+        }
+
+        /* .write-button {
             background-color: #007adf;
-          
+
             color: #fff;
             border: none;
             padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 15px;
+            border-radius: 20px;
         }
 
         .write-button:hover {
             background-color: #11269e;
-        }
+        } */
 
         /* 중하단 구분선 */
         .line {
@@ -112,6 +143,7 @@
             background-color: white;
             cursor: pointer;
             color: #007adf;
+            border-radius: 20px;
         }
 
         .sortLatestBtn:hover,
@@ -138,6 +170,7 @@
             margin: 20px 500px;
             padding: 10px;
 
+
         }
 
         .commentItem {
@@ -148,6 +181,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             background-color: #fff;
+            border-radius: 30px;
         }
 
         .nickname {
@@ -178,6 +212,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             text-align: center;
+            border-radius: 30px;
         }
 
         .deleteBtn {
@@ -190,6 +225,7 @@
             cursor: pointer;
             flex-shrink: 0;
             border: 1px solid #007adf;
+            border-radius: 30px;
         }
 
         .deleteBtn:hover {
@@ -207,6 +243,7 @@
             border-radius: 4px;
             cursor: pointer;
             flex-shrink: 0;
+            border-radius: 30px;
         }
 
         .modifyeBtn:hover {
@@ -215,7 +252,6 @@
 
         .date {
             margin-left: auto;
-            /* 오른쪽 끝으로 밀기 */
             font-size: 14px;
             color: #888;
             flex-shrink: 0;
@@ -450,9 +486,15 @@
             <input type="message" class="form-control" id="writingComment" placeholder="내용">
             <label for="floatingInput">내용을 입력해주세요</label>
         </div>
-        <div class="writingBoxButton">
+        <!-- <div class="writingBoxButton">
             <button id="removeBtn" class="remove-button">지우기</button>
-            <button id="writingBtn" class="write-button">작성하기</button>
+             <button id="writingBtn" class="write-button">작성하기</button>
+
+        </div> -->
+        <div class="button">
+            <div class="d-grid gap-3 col-3 mx-auto text-center">
+                <a class="btn btn-4 rounded-pill fw-bold text-center" id="writingBtn" id="addBtn">작성하기</a>
+            </div>
         </div>
     </div>
 
