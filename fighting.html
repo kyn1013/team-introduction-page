@@ -18,9 +18,16 @@
             font-style: normal;
         }
 
+        body {
+            background: linear-gradient(135deg, paleTurquoise, lightCyan);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
         .hi {
             font-size: 250%;
-            color: red;
+            color: navy;
             height: 300px;
             display: flex;
             flex-direction: column;
@@ -40,8 +47,9 @@
             width: 500px;
             margin: 0 auto;
             padding: 20px;
-            box-shadow: 0px 0px 8px 0px red;
+            box-shadow: 0px 0px 18px 0px white;
             border-radius: 10px;
+            background-color: linear-gradient(135deg, paleTurquoise, lightCyan);
         }
 
         .mybtn {
@@ -56,75 +64,16 @@
         }
 
         .por {
-            color: red;
+            color: navy;
         }
 
         .row {
             margin-top: 30px;
         }
     </style>
-</head>
-
-<body>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">화이팅이조٩( ๑╹ ꇴ╹)۶</li>
-        </ol>
-      </nav>
-
-    <div>
-        <h1 class="hi" onclick="goToUnmergedPage()">화이팅이조를 소개합니다 ٩( ๑╹ ꇴ╹)۶</h1>
-    </div>
-
-    <div class="mypostingbox" id="postingbox">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="image" placeholder="사진 URL">
-            <label for="image">사진 URL</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="name" placeholder="이름">
-            <label for="name">이름</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="MBTI" placeholder="MBTI">
-            <label for="MBTI">MBTI</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="vision" placeholder="각오 한마디">
-            <label for="vision">각오 한마디</label>
-        </div>
-        <div class="mybtn">
-            <button id="postingbtn" type="button" class="btn btn-warning" onclick="saveCard()">기록하기</button>
-            <button type="button" class="btn btn-success" onclick="hideCards()">닫기</button>
-        </div>
-    </div>
-
-    <div class="container text-center">
-        <div class="row">
-            <div class="col">
-                <h2 class="por">우리들 약속</h2>
-                <h3>1. 시간약속 잘지키기</h3>
-                <h3>2. 소통 잘하기</h3>
-                <h3>3. 문제해결에 집중하기</h3>
-                <h3>4. 자리비울 때 캠끄고 0번 누른 후 춤추기</h3>
-            </div>
-            <div class="col">
-                <h2 class="por">우리들 목표</h2>
-                <h3>1. 매일 일정 참여하기</h3>
-                <h3>2. 부끄러워도 모르는거 물어보기</h3>
-                <h3>3. TIL 매일 작성하기</h3>
-            </div>
-
-            <div class="mycard">
-                <div id="cardContainer" class="row row-cols-1 row-cols-md-4 g-4">
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
-        function goToUnmergedPage() {
+        function home() {
             // 병합되지 않은 페이지로 이동
             window.location.href = "https://example.com/unmerged-page"; // 원하는 URL로 변경
         }
@@ -165,6 +114,65 @@
             // e.g., firebase.firestore().collection('cards').add({ imageUrl, name, mbti, vision });
         }
     </script>
+</head>
+
+<body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" onclick="home()"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">화이팅이조٩( ๑╹ ꇴ╹)۶</li>
+        </ol>
+    </nav>
+
+    <div>
+        <h1 class="hi">화이팅이조를 소개합니다 ٩( ๑╹ ꇴ╹)۶</h1>
+    </div>
+
+    <div class="mypostingbox" id="postingbox">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="image" placeholder="사진 URL">
+            <label for="image">사진 URL</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="이름">
+            <label for="name">이름</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="MBTI" placeholder="MBTI">
+            <label for="MBTI">MBTI</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="vision" placeholder="각오 한마디">
+            <label for="vision">각오 한마디</label>
+        </div>
+        <div class="mybtn">
+            <button id="postingbtn" type="button" class="btn btn-danger" onclick="saveCard()">기록하기</button>
+            <button type="button" class="btn btn-success" onclick="hideCards()">닫기</button>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h2 class="por">우리들 약속</h2>
+                <h3>1. 시간약속 잘지키기</h3>
+                <h3>2. 소통 잘하기</h3>
+                <h3>3. 문제해결에 집중하기</h3>
+                <h3>4. 자리비울 때 캠끄고 0번 누른 후 춤추기</h3>
+            </div>
+            <div class="col">
+                <h2 class="por">우리들 목표</h2>
+                <h3>1. 매일 일정 참여하기</h3>
+                <h3>2. 부끄러워도 모르는거 물어보기</h3>
+                <h3>3. TIL 매일 작성하기</h3>
+            </div>
+
+            <div class="mycard">
+                <div id="cardContainer" class="row row-cols-1 row-cols-md-4 g-4">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
