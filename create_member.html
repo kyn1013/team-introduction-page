@@ -66,7 +66,6 @@
         #addBtn {
             padding: 10px 15px;
         }
-
     </style>
     <script type="module">
 
@@ -74,7 +73,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, doc, getDoc, setDoc} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 
         // Firebase 구성 정보
@@ -92,14 +91,18 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+
+
         $("#addBtn").click(async function () {
 
-            // FireStorage에 저장할 이미지
-            let file = document.querySelector('#image').files[0];
-            let storageRef = ref(storage, 'image/' + file.name);
-
             try {
+                const sequenceDocRef = doc(db, "sequence", "sequence");
+                const sequenceDoc = await getDoc(sequenceDocRef);
+                let sequence = sequenceDoc.data().value; // 기존 시퀀스 값
+          
                 // 1. 이미지 저장
+                let file = document.querySelector('#image').files[0];
+                let storageRef = ref(storage, 'image/' + sequence);
                 await uploadBytes(storageRef, file);
 
                 // Firestore에 저장할 내용
@@ -109,16 +112,18 @@
                 let comment = $('#comment').val();
                 let region = $('#region').val();
 
-                let doc = {
+                let memberDoc = {
+                    'id': sequence,
                     'image': imageUrl,
                     'name': name,
                     'introduction': introduction,
                     'comment': comment,
-                    'region' : region
+                    'region': region
                 };
 
                 // 2. 데이터베이스 저장
-                await addDoc(collection(db, "members"), doc);
+                await addDoc(collection(db, "members"), memberDoc);
+                await setDoc(sequenceDocRef, { value: sequence + 1 });
 
                 alert("회원 추가가 완료되었습니다!");
                 location.href = 'main.html';
@@ -137,7 +142,8 @@
             <header class="d-flex justify-content-center py-3">
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a href="main.html" class="nav-link" aria-current="page">Main</a></li>
-                    <li class="nav-item"><a href="create_member.html" class="nav-link active" style="background-color: #CEF6F5;">create</a></li>
+                    <li class="nav-item"><a href="create_member.html" class="nav-link active"
+                            style="background-color: #CEF6F5;">create</a></li>
                     <li class="nav-item"><a href="introduction.html" class="nav-link">introduce</a></li>
                     <li class="nav-item"><a href="guestbook.html" class="nav-link">guest book</a></li>
                 </ul>
@@ -167,12 +173,6 @@
             <label for="floatingTextarea">팀원들에게 한마디</label>
         </div>
     </div>
-
-    <!-- <div class="button">
-        <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-info btn-lg rounded-pill" id="addBtn">등록</button>
-        </div>
-    </div> -->
 
     <div class="button">
         <div class="d-grid gap-3 col-3 mx-auto text-center">
