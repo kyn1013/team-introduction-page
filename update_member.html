@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>팀원 추가 페이지</title>
+    <title>팀원 수정 페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -72,8 +72,8 @@
         // Firebase SDK 라이브러리
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, doc, getDoc, setDoc} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, query, where } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 
         // Firebase 구성 정보
@@ -91,20 +91,72 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        $("#addBtn").click(async function () {
+        const params = new URLSearchParams(window.location.search);
+        const memberId = params.get("id");
+
+        try {
+            const q = query(collection(db, "members"));
+            const querySnapshot = await getDocs(q);
+
+            var memberData = null;
+            querySnapshot.forEach((doc) => {
+                if (doc.id === String(memberId)) {
+                    memberData = doc.data();
+                }
+            });
+
+            if (memberData) {
+
+                let tempHtml = `
+            <div>
+                <label for="formFileLg" class="form-label">프로필 사진을 등록해주세요🥳</label><br>
+                <span>현재 등록된 파일 경로 : ${memberData.image}</span>
+                <input class="form-control form-control-lg" id="image" type="file">
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="name">${memberData.name}</textarea>
+                <label for="floatingTextarea">이름</label>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="introduction">${memberData.introduction}</textarea>
+                <label for="floatingTextarea">한줄소개</label>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="region">${memberData.region}</textarea>
+                <label for="floatingTextarea">지역</label>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="comment">${memberData.comment}</textarea>
+                <label for="floatingTextarea">팀원들에게 한마디</label>
+            </div>
+        `;
+
+                $(".postingbox").append(tempHtml);
+            } else {
+                $('.postingbox').text('존재하지 않는 회원입니다');
+            }
+        } catch (error) {
+            console.error("회원 수정 상세조회 실패 에러 : ", error);
+        }
+
+
+        $("#updateBtn").click(async function () {
 
             try {
                 const sequenceDocRef = doc(db, "settings", "sequence");
                 const sequenceDoc = await getDoc(sequenceDocRef);
-                let sequence = parseInt(sequenceDoc.data().value);
-  
-                // 1. 이미지 저장
-                let file = $('#image').get(0).files[0];
-                let storageRef = ref(storage, 'image/' + sequence);
-                await uploadBytes(storageRef, file);
+                let sequence = sequenceDoc.data().value;
+                var imageUrl = memberData.image;
+
+                // 새로운 이미지가 등록되었다면 이미지 추가
+                if ($('#image').get(0).files[0]) {
+                    let file = $('#image').get(0).files[0];
+                    let storageRef = ref(storage, 'image/' + sequence);
+                    await uploadBytes(storageRef, file);
+                    imageUrl = await getDownloadURL(storageRef);
+                }
 
                 // Firestore에 저장할 내용
-                let imageUrl = await getDownloadURL(storageRef);
                 let name = $('#name').val();
                 let introduction = $('#introduction').val();
                 let comment = $('#comment').val();
@@ -115,15 +167,14 @@
                     'name': name,
                     'introduction': introduction,
                     'comment': comment,
-                    'region': region,
+                    'region': region
                 };
 
-                // 2. 데이터베이스 저장
-                await addDoc(collection(db, "members"), memberDoc);
-                await setDoc(sequenceDocRef, {  value: sequence + 1  });
-                console.log(sequence + 1, typeof(sequence + 1))
+                // 업데이트
+                const docRef = doc(db, "members", memberId);
+                await updateDoc(docRef, memberDoc);
 
-                alert("회원 추가가 완료되었습니다!");
+                alert("회원 수정이 완료되었습니다!");
                 location.href = 'main.html';
             } catch (e) {
                 console.error("Error adding document: ", e);
@@ -139,9 +190,9 @@
         <div class="container">
             <header class="d-flex justify-content-center py-3">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="main.html" class="nav-link" aria-current="page">Main</a></li>
-                    <li class="nav-item"><a href="create_member.html" class="nav-link active"
-                            style="background-color: #CEF6F5;">create</a></li>
+                    <li class="nav-item"><a href="main.html" class="nav-link active" aria-current="page"
+                            style="background-color: #CEF6F5;">Main</a></li>
+                    <li class="nav-item"><a href="create_member.html" class="nav-link">create</a></li>
                     <li class="nav-item"><a href="introduction.html" class="nav-link">introduce</a></li>
                     <li class="nav-item"><a href="guestbook.html" class="nav-link">guest book</a></li>
                 </ul>
@@ -150,31 +201,11 @@
     </header>
 
     <div class="postingbox">
-        <div>
-            <label for="formFileLg" class="form-label">프로필 사진을 등록해주세요🥳</label>
-            <input class="form-control form-control-lg" id="image" type="file">
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="name"></textarea>
-            <label for="floatingTextarea">이름</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="introduction"></textarea>
-            <label for="floatingTextarea">한줄소개</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="region"></textarea>
-            <label for="floatingTextarea">지역</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="comment"></textarea>
-            <label for="floatingTextarea">팀원들에게 한마디</label>
-        </div>
     </div>
 
     <div class="button">
         <div class="d-grid gap-3 col-3 mx-auto text-center">
-            <a class="btn btn-4 rounded-pill fw-bold text-center" id="addBtn">등록</a>
+            <a class="btn btn-4 rounded-pill fw-bold text-center" id="updateBtn">수정하기</a>
         </div>
     </div>
 

@@ -112,9 +112,9 @@
 
         querySnapshot.forEach((doc) => {
             let image = doc.data().image;
-            let name = doc.data().comment;
+            let name = doc.data().name;
             let comment = doc.data().comment;
-            let id = doc.data().id;
+            let id = doc.id;
 
             let tempHtml = `
             <div class="col">
