@@ -49,7 +49,7 @@
 
 | ![](https://velog.velcdn.com/images/dyd81032/post/12a6a5e2-a02f-4bf1-94bb-5924a86f196a/image.png) | ![](https://velog.velcdn.com/images/dyd81032/post/d7b4b4c2-bf0f-4e27-91dc-0aa56ebd789d/image.png) |
 |--------------|--------------|
-| <div align="center"> <font size="4"> 메인 페이지     | <div align="center"> <font size="4">방명록 페이지    |
+| <div align="center"> <font size="4"> TMI 소개 페이지     | <div align="center"> <font size="4">방명록 페이지    |
   
 > ### **시연 연상**
   https://yummy-patio-158.notion.site/16c9ca2c34b0802cadbcfc8b1bef3431
