@@ -1,5 +1,4 @@
 # 파이팅이조 팀소개 웹페이지 프로젝트
----
 > * **프로젝트 기간** : 2024.12.23 ~ 2024.12.30
 - **구성원**
  **팀장** : 김예나
@@ -8,7 +7,6 @@
 
 
 ## 소개
----
 ### **주제 - 팀소개 웹페이지**
 * 팀 메인 페이지
 * 팀원 작성 페이지
@@ -18,7 +16,6 @@
 
 
 ## 역할
----
 ### 김예나
 * 메인페이지 html, css 구성
 * 팀원 추가
@@ -38,7 +35,6 @@
 * 방명록 페이지 기능 구현 (추과, 조회, 수정, 삭제)
 
 ## 기술
----
 * HTML
 * JavaScript
 * CSS
@@ -47,9 +43,6 @@
 * Firebase
 
 ## 페이지
----
-
-
 | ![](https://velog.velcdn.com/images/dyd81032/post/8741f3c3-8294-4cf9-ac23-ceb0613364d3/image.png)|![](https://velog.velcdn.com/images/dyd81032/post/846e337b-dc07-4abf-b168-5cd5f74581eb/image.png)
 |--------------|--------------|
 | <div align="center"> <font size="4"> 메인 페이지     | <div align="center"> <font size="4">팀원 추가 페이지    |
